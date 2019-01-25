@@ -82,22 +82,22 @@ namespace GithubContributionIllusion
 
         private void label1_Click(object sender, EventArgs e)
         {
-            color = this.BackColor;
+            color = label1.BackColor;
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-            color = this.BackColor;
+            color = label2.BackColor;
         }
 
         private void label3_Click(object sender, EventArgs e)
         {
-            color = this.BackColor;
+            color = label3.BackColor;
         }
 
         private void label4_Click(object sender, EventArgs e)
         {
-            color = this.BackColor;
+            color = label4.BackColor;
         }
     }
 }
