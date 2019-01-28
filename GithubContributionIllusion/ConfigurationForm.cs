@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace GithubContributionIllusion
         private Color color = Color.White;
         private List<Tile> baseTiles = new List<Tile>();
         private List<Color> colors = new List<Color>();
-        private bool draw;
+        private bool draw=true, fineTune;
         private int prevX, prevY;
 
         public ConfigurationForm()
@@ -32,14 +33,21 @@ namespace GithubContributionIllusion
             colors.Add(label2.BackColor);
             colors.Add(label3.BackColor);
             colors.Add(label4.BackColor);
+            
+            groupBox1.MouseDown += new MouseEventHandler(FormMouseDown);
+            groupBox1.MouseMove += new MouseEventHandler(FormMouseMove);
+            groupBox1.MouseUp += new MouseEventHandler(FormMouseUp);
+
 
         }
         //723 154
         private void button1_Click(object sender, EventArgs e)
         {
+            //draw = true;
+            //fineTune = false;
         }
 
-        
+
 
         private void FormMouseDown(object sender, MouseEventArgs e)
         {
@@ -67,11 +75,11 @@ namespace GithubContributionIllusion
 
         private void drawOnTiles(int x, int y)
         {
-            int col = (x - baseX - 49) / 10;
-            if ((col >= 0) && ((x - baseX - 49) % 10 <= 8)&&(col<53))
+            int col = (x - baseX) / 10;
+            if ((col >= 0) && ((x - baseX) % 10 <= 8)&&(col<53))
             {
-                int row = (y - baseY - 32) / 10;
-                if ((row >= 0) && ((y - baseY - 32) % 10 <= 8)&&(row<7))
+                int row = (y - baseY) / 10;
+                if ((row >= 0) && ((y - baseY) % 10 <= 8)&&(row<7))
                 {
                     Random random = new Random();
                     baseTiles[row * 53 + col].changeColor(colors[random.Next(0, 3)]);
@@ -141,6 +149,12 @@ namespace GithubContributionIllusion
         private void label3_Click(object sender, EventArgs e)
         {
             color = label3.BackColor;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //draw = false;
+            //fineTune = true;
         }
 
         private void label4_Click(object sender, EventArgs e)
