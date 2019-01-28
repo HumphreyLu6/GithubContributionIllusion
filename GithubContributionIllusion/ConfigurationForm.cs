@@ -15,8 +15,10 @@ namespace GithubContributionIllusion
         private readonly int baseX = 50;
         private readonly int baseY = 42;
         private Color color = Color.White;
-        private char[] chars;
         private List<Tile> baseTiles = new List<Tile>();
+        private List<Color> colors = new List<Color>();
+        private bool draw;
+        private int prevX, prevY;
 
         public ConfigurationForm()
         {
@@ -26,142 +28,63 @@ namespace GithubContributionIllusion
 
             InitializeTiles();
 
+            colors.Add(label1.BackColor);
+            colors.Add(label2.BackColor);
+            colors.Add(label3.BackColor);
+            colors.Add(label4.BackColor);
+
         }
         //723 154
         private void button1_Click(object sender, EventArgs e)
         {
-            chars = textBox1.Text.ToCharArray();
-            foreach (char item in chars)
-            {
-                List<int> poses = new List<int>();
-                int width=0;
+        }
 
-                getTemplate(item, ref width);
+        
+
+        private void FormMouseDown(object sender, MouseEventArgs e)
+        {
+            draw = true;
+            prevX = e.X;
+            prevY = e.Y;
+        }
+
+        private void FormMouseMove(object sender, MouseEventArgs e)
+        {
+            if (draw)
+            {
+                drawOnTiles(prevX, prevY);
+                label7.Text = prevX.ToString() + " " + prevY.ToString() + "\n" + Cursor.Position.X.ToString() + " " + Cursor.Position.Y.ToString();
+
+                prevX = e.X;
+                prevY = e.Y;
             }
         }
 
-        private List<int> getTemplate(char item, ref int width)
+        private void FormMouseUp(object sender, MouseEventArgs e)
         {
-            List<int> temp = new List<int>();
-            if (item.Equals('A'))
-            {
-                width = 5;
-                temp.Add(3);
-                temp.Add(7);
-                temp.Add(9);
-                temp.Add(11);
-                temp.Add(15);
-                temp.Add(16);
-                temp.Add(20);
-                temp.Add(21);
-                temp.Add(22);
-                temp.Add(23);
-                temp.Add(24);
-                temp.Add(25);
-                temp.Add(26);
-                temp.Add(30);
-                temp.Add(31);
-                temp.Add(35);
+            draw = false;
+        }
 
-                return temp;
-            }else if (item.Equals('B'))
+        private void drawOnTiles(int x, int y)
+        {
+            int col = (x - baseX - 49) / 10;
+            if ((col >= 0) && ((x - baseX - 49) % 10 <= 8)&&(col<53))
             {
-                width = 5;
-                temp.Add(1);
-                temp.Add(2);
-                temp.Add(3);
-                temp.Add(4);
-                temp.Add(6);
-                temp.Add(10);
-                temp.Add(11);
-                temp.Add(15);
-                temp.Add(16);
-                temp.Add(17);
-                temp.Add(18);
-                temp.Add(19);
-                temp.Add(21);
-                temp.Add(25);
-                temp.Add(26);
-                temp.Add(30);
-                temp.Add(31);
-                temp.Add(32);
-                temp.Add(33);
-                temp.Add(34);
-
-                return temp;
-            }else if (item.Equals('C'))
-            {
-                width = 5;
-                temp.Add(2);
-                temp.Add(3);
-                temp.Add(4);
-                temp.Add(6);
-                temp.Add(10);
-                temp.Add(11);
-                temp.Add(16);
-                temp.Add(21);
-                temp.Add(26);
-                temp.Add(30);
-                temp.Add(32);
-                temp.Add(33);
-                temp.Add(34);
-
-                return temp;
-            }else if (item.Equals('D'))
-            {
-                width = 5;
-                temp.Add(1);
-                temp.Add(2);
-                temp.Add(3);
-                temp.Add(6);
-                temp.Add(9);
-                temp.Add(11);
-                temp.Add(15);
-                temp.Add(16);
-                temp.Add(20);
-                temp.Add(21);
-                temp.Add(25);
-                temp.Add(26);
-                temp.Add(29);
-                temp.Add(31);
-                temp.Add(32);
-                temp.Add(33);
-
-                return temp;
-            }else if (item.Equals('E'))
-            {
-                width = 5;
-                temp.Add(1);
-                temp.Add(2);
-                temp.Add(3);
-                temp.Add(4);
-                temp.Add(5);
-                temp.Add(6);
-                temp.Add(11);
-                temp.Add(17);
-                temp.Add(18);
-                temp.Add(19);
-                temp.Add(20);
-                temp.Add(21);
-                temp.Add(26);
-                temp.Add(31);
-                temp.Add(32);
-                temp.Add(33);
-                temp.Add(34);
-                temp.Add(35);
-
-                return temp;
+                int row = (y - baseY - 32) / 10;
+                if ((row >= 0) && ((y - baseY - 32) % 10 <= 8)&&(row<7))
+                {
+                    Random random = new Random();
+                    baseTiles[row * 53 + col].changeColor(colors[random.Next(0, 3)]);
+                }
             }
-
-            return null;
         }
 
         private void InitializeTiles()
         {
 
-            for (int x=0; x<53; x++)
+            for (int y = 0; y < 7; y++)
             {
-                for (int y=0; y<7; y++)
+                for (int x = 0; x < 53; x++)
                 {
                     Point point = CalculatePosition(x, y);
                     Tile tile = new Tile(point);

@@ -40,6 +40,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -153,11 +154,19 @@
             this.textBox1.Size = new System.Drawing.Size(86, 28);
             this.textBox1.TabIndex = 8;
             // 
+            // label7
+            // 
+            this.label7.Location = new System.Drawing.Point(154, 214);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(236, 90);
+            this.label7.TabIndex = 9;
+            // 
             // ConfigurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(999, 324);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.groupBox1);
@@ -167,8 +176,12 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ConfigurationForm";
             this.Text = "How would you like your Github?";
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormMouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormMouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormMouseUp);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -192,5 +205,6 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label7;
     }
 }
