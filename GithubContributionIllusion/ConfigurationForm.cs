@@ -18,8 +18,8 @@ namespace GithubContributionIllusion
         private Color color = Color.White;
         private List<Tile> baseTiles = new List<Tile>();
         private List<Color> colors = new List<Color>();
-        private bool draw, fineTune;
-        private int prevX, prevY;
+        private bool draw, fineTune, activate;
+        private int prevX, prevY, conNumber=0;
 
         public ConfigurationForm()
         {
@@ -33,30 +33,40 @@ namespace GithubContributionIllusion
             colors.Add(label2.BackColor);
             colors.Add(label3.BackColor);
             colors.Add(label4.BackColor);
-            
-            //groupBox1.MouseDown += new MouseEventHandler(FormMouseDown);
+
+            groupBox1.Click += new EventHandler(MousePressed);
             //groupBox1.MouseMove += new MouseEventHandler(FormMouseMove);
             //groupBox1.MouseUp += new MouseEventHandler(FormMouseUp);
+            label8.Text = conNumber.ToString() + " contributions in the last year";
 
 
         }
-        //723 154
+
         private void button1_Click(object sender, EventArgs e)
         {
-            //draw = true;
-            //fineTune = false;
-        }
-
-
-
-        private void FormMouseDown(object sender, MouseEventArgs e)
-        {
             draw = true;
-            prevX = e.X;
-            prevY = e.Y;
+            fineTune = false;
         }
 
-        private void FormMouseMove(object sender, MouseEventArgs e)
+
+
+        private void MousePressed(object sender, EventArgs e)
+        {
+            if (draw)
+            {
+                if (activate)
+                {
+                    activate = false;
+                }
+                else
+                {
+                    activate = true;
+                }
+            }
+            
+        }
+
+        /*private void FormMouseMove(object sender, MouseEventArgs e)
         {
             if (draw)
             {
@@ -65,14 +75,17 @@ namespace GithubContributionIllusion
 
                 prevX = e.X;
                 prevY = e.Y;
+                //Tile tile = (Tile)sender;
+                //Random random = new Random();
+                //tile.changeColor(colors[random.Next(0, 3)]);
             }
-        }
+        }*/
 
         private void FormMouseUp(object sender, MouseEventArgs e)
         {
             draw = false;
         }
-
+        /*
         private void drawOnTiles(int x, int y)
         {
             int col = (x - baseX) / 10;
@@ -85,7 +98,7 @@ namespace GithubContributionIllusion
                     baseTiles[row * 53 + col].changeColor(colors[random.Next(0, 3)]);
                 }
             }
-        }
+        }*/
 
         private void InitializeTiles()
         {
@@ -97,23 +110,46 @@ namespace GithubContributionIllusion
                     Point point = CalculatePosition(x, y);
                     Tile tile = new Tile(point);
                     tile.Click += new EventHandler(changeColor);
-                    tile.MouseDown += new MouseEventHandler(FormMouseDown);
-                    tile.MouseMove += new MouseEventHandler(FormMouseMove);
-                    tile.MouseUp += new MouseEventHandler(FormMouseUp);
+                    tile.MouseEnter += new EventHandler(mouseEnterred);
                     baseTiles.Add(tile);
                     groupBox1.Controls.Add(tile);
                 }
             }
         }
 
+        private void mouseEnterred(object sender, EventArgs e)
+        {
+            if (activate)
+            {
+                Tile tile = (Tile)sender;
+                Random random = new Random();
+                tile.changeColor(colors[random.Next(0, 3)]);
+
+            }
+        }
+
         private void changeColor(object sender, EventArgs e)
         {
-            Label label = sender as Label;
-            if (label != null)
+            if (fineTune)
             {
-                Tile tile = label as Tile;
-                tile.changeColor(color);
+                Label label = sender as Label;
+                if (label != null)
+                {
+                    Tile tile = label as Tile;
+                    tile.changeColor(color);
+                }
+            }else if (draw)
+            {
+                if (activate)
+                {
+                    activate = false;
+                }
+                else
+                {
+                    activate = true;
+                }
             }
+            
         }
 
         private void InitializeMonthTag()
@@ -149,6 +185,27 @@ namespace GithubContributionIllusion
             color = label2.BackColor;
         }
 
+        private void label8_Click(object sender, EventArgs e)
+        {
+            foreach (Tile tile in baseTiles)
+            {
+                if (tile.BackColor.Equals(colors[0]))
+                {
+                    conNumber += 2;
+                }else if (tile.BackColor.Equals(colors[1]))
+                {
+                    conNumber += 4;
+                }else if (tile.BackColor.Equals(colors[2]))
+                {
+                    conNumber += 6;
+                }else if (tile.BackColor.Equals(colors[3]))
+                {
+                    conNumber += 8;
+                }
+            }
+            label8.Text = conNumber.ToString() + " contributions in the last year";
+        }
+
         private void label3_Click(object sender, EventArgs e)
         {
             color = label3.BackColor;
@@ -156,8 +213,8 @@ namespace GithubContributionIllusion
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //draw = false;
-            //fineTune = true;
+            draw = false;
+            fineTune = true;
         }
 
         private void label4_Click(object sender, EventArgs e)
