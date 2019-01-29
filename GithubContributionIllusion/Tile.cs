@@ -15,7 +15,7 @@ namespace GithubContributionIllusion
             this.Location = point;
             this.Width = 8;
             this.Height = 8;
-            this.BackColor = Color.Black;
+            this.BackColor = Color.White;
         }
         public void changeColor(Color color)
         {
