@@ -18,7 +18,7 @@ namespace GithubContributionIllusion
         private Color color = Color.White;
         private List<Tile> baseTiles = new List<Tile>();
         private List<Color> colors = new List<Color>();
-        private bool draw=true, fineTune;
+        private bool draw, fineTune;
         private int prevX, prevY;
 
         public ConfigurationForm()
@@ -34,9 +34,9 @@ namespace GithubContributionIllusion
             colors.Add(label3.BackColor);
             colors.Add(label4.BackColor);
             
-            groupBox1.MouseDown += new MouseEventHandler(FormMouseDown);
-            groupBox1.MouseMove += new MouseEventHandler(FormMouseMove);
-            groupBox1.MouseUp += new MouseEventHandler(FormMouseUp);
+            //groupBox1.MouseDown += new MouseEventHandler(FormMouseDown);
+            //groupBox1.MouseMove += new MouseEventHandler(FormMouseMove);
+            //groupBox1.MouseUp += new MouseEventHandler(FormMouseUp);
 
 
         }
@@ -97,6 +97,9 @@ namespace GithubContributionIllusion
                     Point point = CalculatePosition(x, y);
                     Tile tile = new Tile(point);
                     tile.Click += new EventHandler(changeColor);
+                    tile.MouseDown += new MouseEventHandler(FormMouseDown);
+                    tile.MouseMove += new MouseEventHandler(FormMouseMove);
+                    tile.MouseUp += new MouseEventHandler(FormMouseUp);
                     baseTiles.Add(tile);
                     groupBox1.Controls.Add(tile);
                 }
