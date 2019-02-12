@@ -31,5 +31,8 @@ Windows Operating System
 
 * Click on the tile you wang to adjust.
 
+## Issues
+
+* The month bar does not change dynamically.
 
 
