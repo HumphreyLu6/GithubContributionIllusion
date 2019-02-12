@@ -15,7 +15,7 @@ Windows Operating System
 
 ## Interfaces
 
-![](ScreenShot1.PNG)
+![](Images/ScreenShot1.PNG)
 
 ## Use Intro
 
