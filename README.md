@@ -1,6 +1,6 @@
 # GithubContributionIllusion
 
-A windows form app to draw fake Github Contributions, so you can screen shot and show off. Ideas comes from commiting hard every day
+A windows app to draw fake Github Contributions. You can screen shot and show off. Ideas comes from commiting hard every day
 but takeing too long to get accomplishments. During the development, learned how to handle events properly.
 
 ## Requirements
